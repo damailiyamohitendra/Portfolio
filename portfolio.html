@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Brofic - Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <header>
-  <h1>Brofic</h1>
+  <a href="index.html" class="logo"><img src="images/logo.png" alt="Brofic Logo"></a>
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -25,45 +24,263 @@
 
 <section id="portfolio">
   <h2 class="section-title">Our Portfolio</h2>
-  <div class="card-container">
-    <div class="card">
-      <h3>Brand Logo</h3>
-      <p>A sleek and modern logo designed for a startup.</p>
-    </div>
-    <div class="card">
-      <h3>Event Poster</h3>
-      <p>Eye-catching poster design for a cultural event.</p>
-    </div>
-    <div class="card">
-      <h3>Wedding Invite</h3>
-      <p>Elegant video invitation crafted for a special couple.</p>
-    </div>
-    <div class="card">
-      <h3>Restaurant Branding</h3>
-      <p>Complete branding package with menus, logos, and signage.</p>
-    </div>
-    <div class="card">
-      <h3>Social Media Campaign</h3>
-      <p>Creative Instagram and Facebook graphics for digital marketing.</p>
-    </div>
-    <div class="card">
-      <h3>Corporate Presentation</h3>
-      <p>Professional slides designed for client pitches and events.</p>
-    </div>
+
+  <!-- Category tabs -->
+  <div class="portfolio-tabs" role="tablist" aria-label="Portfolio categories">
+    <button class="tab active" data-cat="all" role="tab" aria-selected="true">All</button>
+    <button class="tab" data-cat="brand" role="tab">Brand Logos</button>
+    <button class="tab" data-cat="wedding" role="tab">Wedding Invitations</button>
+    <button class="tab" data-cat="poster" role="tab">Event Posters</button>
+    <button class="tab" data-cat="video" role="tab">Promo Videos</button>
+    <button class="tab" data-cat="social" role="tab">Social Media</button>
+    <button class="tab" data-cat="restaurant" role="tab">Restaurant Branding</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="portfolio-grid" id="portfolioGrid">
+
+    <!-- BRAND: multiple logos -->
+    <figure class="media-card" data-type="image" data-src="images/brand1.jpg" data-cat="brand">
+      <img src="images/brand1_thumb.jpg" alt="Brand Logo 1" loading="lazy">
+      <figcaption>Brand Logo — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/brand2.jpg" data-cat="brand">
+      <img src="images/brand2_thumb.jpg" alt="Brand Logo 2" loading="lazy">
+      <figcaption>Brand Logo — 2</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/brand3.jpg" data-cat="brand">
+      <img src="images/brand3_thumb.jpg" alt="Brand Logo 3" loading="lazy">
+      <figcaption>Brand Logo — 3</figcaption>
+    </figure>
+
+    <!-- WEDDING: multiple invites -->
+    <figure class="media-card" data-type="image" data-src="images/wedding1.jpg" data-cat="wedding">
+      <img src="images/wedding1_thumb.jpg" alt="Wedding Invite 1" loading="lazy">
+      <figcaption>Wedding Invite — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/wedding2.jpg" data-cat="wedding">
+      <img src="images/wedding2_thumb.jpg" alt="Wedding Invite 2" loading="lazy">
+      <figcaption>Wedding Invite — 2</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/wedding3.jpg" data-cat="wedding">
+      <img src="images/wedding3_thumb.jpg" alt="Wedding Invite 3" loading="lazy">
+      <figcaption>Wedding Invite — 3</figcaption>
+    </figure>
+
+    <!-- POSTER -->
+    <figure class="media-card" data-type="image" data-src="images/dv1.jpg" data-cat="poster">
+      <img src="images/dv2.jpg" alt="Event Poster 1" loading="lazy">
+      <figcaption>Event Poster — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/poster2.jpg" data-cat="poster">
+      <img src="images/poster2_thumb.jpg" alt="Event Poster 2" loading="lazy">
+      <figcaption>Event Poster — 2</figcaption>
+    </figure>
+
+    <!-- VIDEO: multiple promo videos -->
+    <figure class="media-card" data-type="video" data-src="videos/raj.mp4" data-cat="video">
+      <img src="images/dv1.jpg" alt="Promo Video 1" loading="lazy">
+      <figcaption>Promo Video — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="video" data-src="videos/raj.mp4" data-cat="video">
+      <img src="images/dv2.jpg" alt="Promo Video 2" loading="lazy">
+      <figcaption>Promo Video — 2</figcaption>
+    </figure>
+
+    <!-- SOCIAL MEDIA -->
+    <figure class="media-card" data-type="image" data-src="images/social1.jpg" data-cat="social">
+      <img src="images/social1_thumb.jpg" alt="Social Campaign 1" loading="lazy">
+      <figcaption>Social Campaign — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/social2.jpg" data-cat="social">
+      <img src="images/social2_thumb.jpg" alt="Social Campaign 2" loading="lazy">
+      <figcaption>Social Campaign — 2</figcaption>
+    </figure>
+
+    <!-- RESTAURANT BRANDING -->
+    <figure class="media-card" data-type="image" data-src="images/restaurant1.jpg" data-cat="restaurant">
+      <img src="images/restaurant1_thumb.jpg" alt="Restaurant Branding 1" loading="lazy">
+      <figcaption>Restaurant Branding — 1</figcaption>
+    </figure>
+
+    <figure class="media-card" data-type="image" data-src="images/restaurant2.jpg" data-cat="restaurant">
+      <img src="images/restaurant2_thumb.jpg" alt="Restaurant Branding 2" loading="lazy">
+      <figcaption>Restaurant Branding — 2</figcaption>
+    </figure>
+
   </div>
 </section>
 
-<footer>
-  <div class="social-icons">
-    <a href="#"><i class="fab fa-facebook-f"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-youtube"></i></a>
-    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-    <a href="#"><i class="fab fa-whatsapp"></i></a>
-  </div>
-  <p>© 2025 Brofic. All Rights Reserved.</p>
-</footer>
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <div class="lb-content" id="lbContent"></div>
+  <button class="lb-prev" id="lbPrev" aria-label="Previous">◀</button>
+  <button class="lb-next" id="lbNext" aria-label="Next">▶</button>
+</div>
+
+<script>
+/* Portfolio filtering + lightbox navigation (works within active category) */
+(function(){
+  const tabs = Array.from(document.querySelectorAll('.portfolio-tabs .tab'));
+  const cards = Array.from(document.querySelectorAll('.media-card'));
+  const grid = document.getElementById('portfolioGrid');
+
+  const lightbox = document.getElementById('lightbox');
+  const lbContent = document.getElementById('lbContent');
+  const lbClose = document.getElementById('lbClose');
+  const lbPrev = document.getElementById('lbPrev');
+  const lbNext = document.getElementById('lbNext');
+
+  let activeCategory = 'all';
+
+  // filter function
+  function applyFilter(cat){
+    activeCategory = cat;
+    cards.forEach(card => {
+      const c = card.dataset.cat;
+      if(cat === 'all' || c === cat){
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    // update active tab UI
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
+  }
+
+  // tab clicks
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const cat = tab.dataset.cat;
+      applyFilter(cat);
+    });
+  });
+
+  // helper to get visible cards array (in DOM order)
+  function visibleCards(){
+    return Array.from(document.querySelectorAll('.media-card:not(.hidden)'));
+  }
+
+  // open lightbox for the clicked visible card
+  function openAtCard(card){
+    const type = card.dataset.type;
+    const src = card.dataset.src;
+    const caption = card.querySelector('figcaption')?.textContent || '';
+
+    lbContent.innerHTML = '';
+    if(type === 'image'){
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = caption;
+      img.className = 'lb-media';
+      lbContent.appendChild(img);
+    } else if(type === 'video'){
+      const video = document.createElement('video');
+      video.controls = true;
+      video.autoplay = true;
+      video.className = 'lb-media';
+      const s = document.createElement('source');
+      s.src = src;
+      video.appendChild(s);
+      lbContent.appendChild(video);
+    }
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // get index of a card within visibleCards()
+  function getVisibleIndex(card){
+    const v = visibleCards();
+    return v.indexOf(card);
+  }
+
+  // open by index within visible cards
+  function openAtIndex(idx){
+    const v = visibleCards();
+    if(idx < 0 || idx >= v.length) return;
+    openAtCard(v[idx]);
+  }
+
+  // attach click handlers for each card
+  cards.forEach(card => {
+    card.tabIndex = 0;
+    card.addEventListener('click', () => {
+      // if card is hidden ignore
+      if(card.classList.contains('hidden')) return;
+      const idx = getVisibleIndex(card);
+      openAtIndex(idx);
+    });
+    card.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter' && !card.classList.contains('hidden')){
+        const idx = getVisibleIndex(card);
+        openAtIndex(idx);
+      }
+    });
+  });
+
+  function closeLB(){
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lbContent.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  function showPrev(){
+    const v = visibleCards();
+    if(!v.length) return;
+    // find currently open index by matching src
+    const currentSrc = lbContent.querySelector('.lb-media')?.getAttribute('src');
+    let i = v.findIndex(c => c.dataset.src === currentSrc);
+    if(i === -1) {
+      // fallback: try matching by alt (image)
+      i = v.findIndex(c => c.querySelector('img')?.src === currentSrc);
+    }
+    if(i > 0) openAtIndex(i - 1);
+  }
+
+  function showNext(){
+    const v = visibleCards();
+    if(!v.length) return;
+    const currentSrc = lbContent.querySelector('.lb-media')?.getAttribute('src');
+    let i = v.findIndex(c => c.dataset.src === currentSrc);
+    if(i === -1) {
+      i = v.findIndex(c => c.querySelector('img')?.src === currentSrc);
+    }
+    if(i < v.length - 1) openAtIndex(i + 1);
+  }
+
+  // controls
+  lbClose.addEventListener('click', closeLB);
+  lbPrev.addEventListener('click', showPrev);
+  lbNext.addEventListener('click', showNext);
+
+  // keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') closeLB();
+    if(e.key === 'ArrowLeft') showPrev();
+    if(e.key === 'ArrowRight') showNext();
+  });
+
+  // click outside -> close
+  lightbox.addEventListener('click', (e) => {
+    if(e.target === lightbox) closeLB();
+  });
+
+  // initial: show all
+  applyFilter('all');
+
+})();
+</script>
 
 </body>
 </html>
