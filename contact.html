@@ -96,5 +96,55 @@
   </div>
 </section>
 
+<script>
+  // Generic submit handler for your custom forms (order/contact/feedback)
+  // update selector '#orderForm' to the form id you use
+  function attachFormHandler(formSelector, formType = 'contact') {
+    const form = document.querySelector(formSelector);
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // gather values (adjust names to match your inputs)
+      const fd = new FormData(form);
+      const payload = {
+        formType: formType,
+        name: fd.get('name') || fd.get('fullname') || '',
+        email: fd.get('email') || '',
+        message: fd.get('message') || fd.get('details') || ''
+      };
+
+      try {
+        const res = await fetch('YOUR_WEBAPP_URL', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // If you deployed as "Anyone, even anonymous" CORS should allow this.
+        const data = await res.json();
+        if (data.status === 'success') {
+          alert('✅ Submitted successfully');
+          form.reset();
+        } else {
+          console.error('Server error:', data);
+          alert('Submission failed, try again');
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        alert('Network error. If you are testing locally (file://) open page via a webserver or host it.');
+      }
+    });
+  }
+
+  // Attach handlers: change selectors if your forms have different IDs
+  // Example: contact form in your contact.html has class .contact-form
+  attachFormHandler('.contact-form', 'contact');
+  attachFormHandler('form#orderForm', 'order');     // only if you set id="orderForm"
+  attachFormHandler('form#feedbackForm', 'feedback'); // set ids in your HTML or change selector
+</script>
+
+
 </body>
 </html>
