@@ -200,7 +200,7 @@ nav ul li a:hover {
    Sections, Cards & Forms
    =========================== */
 section {
-  padding: 80px 50px;
+  padding: 30px 50px;
   text-align: center;
   flex: 1;
 }
@@ -498,3 +498,349 @@ form button:hover { background: #d1002f; }
   .portfolio-tabs .tab { padding: 8px 10px; font-size:13px; }
   .media-card img { height: 140px; }
 }
+
+
+
+
+
+/* ---------- Contact page layout: left form / center divider / right socials ---------- */
+.contact-section {
+  padding: 30px 20px;
+  min-height: calc(100vh - 120px); /* keep it centered vertically (header occupies ~72px) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-container {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+/* columns */
+.contact-left,
+.contact-right {
+  flex: 1 1 0;
+  min-width: 260px;
+}
+
+/* keep form look from earlier but constrain width */
+.contact-form {
+  max-width: 540px;
+  margin: 0;
+}
+.contact-form label { display:block; margin:12px 0 6px; font-weight:500; }
+.contact-form input,
+.contact-form textarea { width:100%; padding:12px; border-radius:8px; border:none; background:#0f243d; color:#fff; margin-bottom:12px; }
+.contact-form .btn { background:#f40136; color:#fff; padding:12px 20px; border-radius:8px; border:none; cursor:pointer; }
+
+/* center vertical divider */
+.divider {
+  width: 1px;
+  height: 60%;
+  background: rgba(255,255,255,0.12);
+  align-self: center;
+  border-radius: 1px;
+}
+
+/* social box */
+.social-box {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+}
+.social-box h3 { margin: 0; color: #f40136; font-size: 22px; }
+.social-note { margin:0; color: rgba(255,255,255,0.85); }
+
+/* stacked circular icon buttons */
+.social-icons {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  margin-top: 6px;
+}
+.social-icons a {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.04);
+  text-decoration:none;
+  color: #fff;
+  transition: transform .16s ease, background .18s ease;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.25);
+}
+.social-icons a:hover {
+  transform: translateY(-6px);
+  background: #f40136;
+  color: #fff;
+}
+.social-icons .icon { width:22px; height:22px; fill: currentColor; }
+
+/* RESPONSIVE: tablet / small screens */
+@media (max-width: 900px) {
+  .contact-container { gap: 24px; padding: 12px; }
+  .divider { height: 50%; width: 1px; }
+  .social-icons a { width:56px; height:56px; }
+}
+
+@media (max-width: 700px) {
+  /* stack vertically and make divider horizontal line */
+  .contact-container {
+    flex-direction: column;
+    gap: 18px;
+    padding: 16px;
+  }
+  .divider {
+    width: 60%;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 6px auto;
+  }
+  .contact-left, .contact-right { width:100%; }
+  .social-icons { flex-direction: row; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .social-icons a { width:52px; height:52px; }
+  .contact-section { padding: 48px 14px; min-height: auto; }
+}
+
+/* small tweak for very small phones */
+@media (max-width: 420px) {
+  .social-icons a { width:46px; height:46px; }
+  .contact-form textarea { min-height: 110px; }
+  .contact-section { padding: 36px 12px; }
+}
+
+
+
+
+/* ---------- Contact page layout: left form / center divider / right = social icons grid ---------- */
+.contact-section {
+  padding: 0px 20px;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-container {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.contact-left,
+.contact-right {
+  flex: 1 1 0;
+  min-width: 260px;
+}
+
+.contact-form {
+  max-width: 540px;
+  margin: 0;
+}
+.contact-form label { display:block; margin:12px 0 6px; font-weight:500; }
+.contact-form input,
+.contact-form textarea { width:100%; padding:12px; border-radius:8px; border:none; background:#0f243d; color:#fff; margin-bottom:12px; }
+.contact-form .btn { background:#f40136; color:#fff; padding:12px 20px; border-radius:8px; border:none; cursor:pointer; }
+
+/* center divider */
+.divider {
+  width: 1px;
+  height: 60%;
+  background: rgba(255,255,255,0.12);
+  align-self: center;
+  border-radius: 1px;
+}
+
+/* social box */
+.social-box { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; }
+.social-box h3 { margin: 0; color: #f40136; font-size: 36px; }
+.social-note { margin:0; color: rgba(255,255,255,0.85); }
+
+/* ---------- GRID of icons: 3 across ---------- */
+.social-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  justify-items: center;
+  align-items: center;
+  margin-top: 6px;
+  width: 100%;
+}
+
+/* large circular buttons */
+.social-icons a {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 92px;
+  height: 92px;
+  border-radius:50%;
+  background: rgba(255,255,255,0.04);
+  text-decoration:none;
+  color: #fff;
+  transition: transform .16s ease, background .18s ease;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.22);
+}
+.social-icons a:hover {
+  transform: translateY(-6px);
+  background: #f40136;
+  color: #fff;
+}
+
+/* SVG inside: use currentColor so hover fills work */
+.social-icons .icon {
+  width: 36px;
+  height: 36px;
+  fill: currentColor;
+  display:block;
+}
+
+/* tablet adjustments */
+@media (max-width: 900px) {
+  .contact-container { gap: 24px; padding: 12px; }
+  .divider { height: 50%; }
+  .social-icons a { width:80px; height:80px; }
+  .social-icons .icon { width: 32px; height: 32px; }
+}
+
+/* mobile: stack vertically, horizontal divider; icons become 3-across but smaller */
+@media (max-width: 700px) {
+  .contact-container {
+    flex-direction: column;
+    gap: 18px;
+    padding: 16px;
+  }
+  .divider {
+    width: 60%;
+    height: 1px;
+    background: rgba(255,255,255,0.12);
+    margin: 6px auto;
+  }
+  .contact-left, .contact-right { width:100%; }
+  /* keep 3 columns on narrow, but reduce icon size so the grid fits */
+  .social-icons { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .social-icons a { width:64px; height:64px; }
+  .social-icons .icon { width:22px; height:22px; }
+  .contact-section { padding: 48px 14px; min-height: auto; }
+}
+
+/* very small phones */
+@media (max-width: 420px) {
+  .social-icons a { width:56px; height:56px; }
+  .social-icons .icon { width:20px; height:20px; }
+  .contact-form textarea { min-height: 100px; }
+  .contact-section { padding: 36px 12px; }
+}
+
+
+
+
+/* =========================
+   Responsive adjustments (append this to bottom of style.css)
+   Keeps original design & animations; adds breakpoints
+   ========================= */
+
+/* fluid text for hero while keeping original font-sizes as defaults */
+.hero h1 { font-size: clamp(2.4rem, 6.6vw, 5rem); }
+.typing { font-size: clamp(1rem, 2.2vw, 2rem); }
+
+/* header / nav responsiveness */
+@media (max-width: 900px) {
+  header {
+    padding: 10px 14px;
+  }
+  header .logo img { height: 36px; }
+  nav ul { gap: 10px; flex-wrap: wrap; justify-content: center; }
+  nav ul li a { padding: 8px 8px; font-size: 13px; }
+  .hero { padding: 36px 18px; height: auto; }
+}
+
+/* mobile compact header and stacked nav */
+@media (max-width: 700px) {
+  /* allow header to grow taller without covering content */
+  body { padding-top: 92px; }
+
+  /* smaller logos in header */
+  header .logo img { height: 34px; }
+
+  /* hero adjustments */
+  .hero { padding: 48px 16px; }
+  .hero h1 { font-size: 3.2rem; }
+  .hero .hero-logo { height: 64px; margin-left: 4px; }
+
+  /* typing effect: disable wide width animation (looks better on small screens) */
+  .typing { animation: none; width: auto; border-right: none; }
+
+  /* glitter & lines remain visible but reduce visual intensity via opacity */
+  .glitter { opacity: 0.85; }
+  .abstract-line { opacity: 0.35; }
+
+  /* footer icons larger target */
+  .simple-footer .footer-icons svg { width: 22px; height: 22px; }
+
+  /* portfolio grid -> 1 or 2 columns */
+  .portfolio-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; padding: 8px 12px; }
+
+  /* portfolio media images smaller */
+  .media-card img { height: 140px; }
+
+  /* contact: stack columns vertically */
+  .contact-container { flex-direction: column; gap: 18px; padding: 12px; }
+  .divider { width: 60%; height: 1px; margin: 8px auto; }
+  .social-icons { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .social-icons a { width: 64px; height: 64px; }
+
+  /* reduce heavy box-shadows on mobile for perf */
+  .card, .media-card { box-shadow: 0 6px 18px rgba(0,0,0,0.45); }
+
+  /* lightbox controls simpler on mobile */
+  .lb-prev, .lb-next { display: none; }
+}
+
+/* very small phones */
+@media (max-width: 420px) {
+  .hero h1 { font-size: 2.4rem; }
+  .hero .hero-logo { height: 52px; }
+  .social-icons a { width: 52px; height: 52px; }
+  .media-card img { height: 120px; }
+  .typing { font-size: 1rem; }
+  .contact-form textarea { min-height: 100px; }
+}
+
+/* keep the sparkle/lines but limit overlap issues on very narrow widths */
+@media (max-width: 360px) {
+  .glitter span { opacity: 0.7; transform: translateZ(0); }
+  .abstract-line { width: 1px; }
+}
+
+/* ensure footer icons remain centered and not overflowing */
+.simple-footer .footer-icons { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; }
+
+/* keep portfolio tabs scrollable on tiny devices */
+.portfolio-tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; padding: 0 8px; gap:8px; }
+
+/* small improvement: clickable media-cards have bigger hit area on mobile */
+.media-card { padding-bottom: 6px; }
+
+/* Accessibility hint: show focus outline for keyboard users */
+a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid rgba(244,1,54,0.12); outline-offset: 2px; }
+
+/* End of appended responsive rules */
