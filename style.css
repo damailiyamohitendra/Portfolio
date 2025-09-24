@@ -844,3 +844,8 @@ form button:hover { background: #d1002f; }
 a:focus, button:focus, input:focus, textarea:focus { outline: 3px solid rgba(244,1,54,0.12); outline-offset: 2px; }
 
 /* End of appended responsive rules */
+
+/* keep your nav visuals but allow wrapping and center on small screens */
+@media (max-width:700px) {
+  nav ul { justify-content: center; flex-wrap: wrap; gap: 8px; }
+}
