@@ -3,12 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brofic - Order</title>
+  <title>Brofic - Place Order</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <a href="index.html" class="logo" aria-label="Brofic home">
+      <img src="images/logo.png" alt="Brofic logo">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="order.html" class="active">Order</a></li>
+        <li><a href="feedback.html">Feedback</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
+  <!-- <header>
   <h1>Brofic</h1>
   <nav>
     <ul>
@@ -20,35 +36,38 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </nav>
-</header>
+</header> -->
 
-<section>
-  <h2 class="section-title">Place Your Order</h2>
-  <form>
-    <label for="name">Full Name</label>
-    <input type="text" id="name" placeholder="Enter your name" required>
+  <!-- Order Form Section -->
+  <section>
+    <h2 class="section-title">Place Your Order</h2>
+    <form id="orderForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required>
 
-    <label for="email">Email Address</label>
-    <input type="email" id="email" placeholder="Enter your email" required>
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-    <label for="service">Select Service</label>
-    <select id="service" required>
-      <option value="">-- Choose a Service --</option>
-      <option>Logo Design</option>
-      <option>Poster Design</option>
-      <option>Wedding Invitation</option>
-      <option>Business Card</option>
-      <option>Social Media Graphics</option>
-    </select>
+      <label for="service">Select Service</label>
+      <select id="service" name="service" required>
+        <option value="">-- Choose a Service --</option>
+        <option>Logo Design</option>
+        <option>Poster Design</option>
+        <option>Wedding Invitation</option>
+        <option>Business Card</option>
+        <option>Social Media Graphics</option>
+      </select>
 
-    <label for="details">Project Details</label>
-    <textarea id="details" rows="4" placeholder="Describe your requirements..."></textarea>
+      <label for="details">Project Details</label>
+      <textarea id="details" name="details" rows="4" placeholder="Describe your requirements..."></textarea>
 
-    <button type="submit">Submit Order</button>
-  </form>
-</section>
+      <button type="submit" id="submitBtn">Place Order</button>
+      <p id="orderMsg" style="margin-top:10px;"></p>
+    </form>
+  </section>
 
-<footer class="simple-footer">
+  <!-- Footer -->
+  <footer class="simple-footer">
   <p>© <span id="year"></span> Brofic | All Rights Reserved</p>
   <div class="footer-icons">
     <a href="https://facebook.com/" target="_blank" aria-label="Facebook">
@@ -95,36 +114,57 @@
   </div>
 </footer>
 
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-<form id="contactForm">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Your Message"></textarea>
-  <button type="submit">Send</button>
-</form>
+  <!-- Script -->
+  <script>
+    // Replace this with your deployed Apps Script Web App URL
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxVdeUi_qqDkz18y7u_adYOspIdcpHMM-MSPNNKn1PQoAEICFcU75Lhr-7wTbgwfCM/exec";
 
-<script>
-document.getElementById("contactForm").addEventListener("submit", function(e){
-  e.preventDefault();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-  const data = {
-    name: this.name.value,
-    email: this.email.value,
-    message: this.message.value
-  };
+    const form = document.getElementById('orderForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const msg = document.getElementById('orderMsg');
 
-  fetch("https://script.google.com/u/1/home/projects/1clNR9WtTRzYF0f6RYUIxi0ZmU9yTu4YHpu6YwhH3COzHS8i-72oW6MfI/edit", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.text())
-  .then(msg => alert("✅ Form submitted!"))
-  .catch(err => alert("❌ Error: " + err));
-});
-</script>
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Placing...';
 
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        service: document.getElementById('service').value.trim(),
+        details: document.getElementById('details').value.trim()
+      };
+
+      try {
+        const res = await fetch(WEB_APP_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json().catch(() => null);
+
+        if (json && json.status === 'success') {
+          msg.style.color = 'lightgreen';
+          msg.textContent = '✅ Order placed successfully!';
+          form.reset();
+        } else {
+          msg.style.color = 'salmon';
+          msg.textContent = '❌ Error: ' + (json && json.message ? json.message : 'Server issue');
+        }
+      } catch (err) {
+        console.error(err);
+        msg.style.color = 'salmon';
+        msg.textContent = '⚠️ Network error, please try again.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Place Order';
+      }
+    });
+  </script>
 </body>
 </html>

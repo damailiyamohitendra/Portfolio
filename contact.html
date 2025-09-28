@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Brofic - Contact</title>
   <link rel="stylesheet" href="style.css" />
-
-   <style>
-    /* small inline styles for success/error messages */
-    .form-msg { margin-top:12px; font-weight:600; }
-    .form-msg.success { color: #28a745; }
-    .form-msg.error { color: #e0364b; }
-  </style>
-
 </head>
 <body>
 
@@ -38,7 +30,7 @@
       <h2 class="section-title">Contact Us</h2>
       <p class="lead">Have a project in mind? Let’s collaborate!</p>
 
-      <!-- <form class="contact-form">
+      <form class="contact-form">
         <label for="name">Full Name</label>
         <input type="text" id="name" placeholder="Enter your name" required>
 
@@ -49,23 +41,7 @@
         <textarea id="message" rows="6" placeholder="Write your message..." required></textarea>
 
         <button type="submit" class="btn">Send Message</button>
-      </form> -->
-
-      <form class="contact-form" id="contactForm" data-type="contact">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required>
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="6" placeholder="Write your message..." required></textarea>
-
-        <button type="submit" class="btn">Send Message</button>
-
-        <div id="formMessage" class="form-msg" aria-live="polite"></div>
       </form>
-
     </div>
 
     <!-- center dividing line -->
@@ -119,71 +95,6 @@
 
   </div>
 </section>
-
-
-<script>
-  // ← REPLACE this with the Web App /exec URL you get after deploying Apps Script
-  const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbx4vig944HO1IvHwJIrh8iHsYJRBeZxtYFuulDJaa13Vrz3iUH4P3jfQizQnMBxmB07/exec';
-
-  // Attach handler for contact form only (this file)
-  (function(){
-    const form = document.getElementById('contactForm');
-    const msgEl = document.getElementById('formMessage');
-
-    if (!form) return;
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      msgEl.textContent = '';
-      msgEl.className = 'form-msg';
-
-      // collect values (names must match)
-      const fd = new FormData(form);
-      const payload = {
-        formType: form.dataset.type || 'contact',
-        name: fd.get('name') || '',
-        email: fd.get('email') || '',
-        message: fd.get('message') || ''
-      };
-
-      console.log('Submitting to Apps Script:', WEBAPP_URL, payload);
-
-      try {
-        const res = await fetch(WEBAPP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        console.log('Fetch response status:', res.status, res.statusText);
-
-        // read raw text (helps debug when server returns HTML)
-        const text = await res.text();
-        console.log('Raw response text:', text);
-
-        let data;
-        try { data = JSON.parse(text); } catch (err) { data = null; }
-
-        if (res.ok && data && data.status === 'success') {
-          msgEl.textContent = '✅ Submitted successfully. Thank you!';
-          msgEl.classList.add('success');
-          form.reset();
-        } else {
-          // show server error info if available
-          const errMsg = (data && data.message) ? data.message : (text || 'Unknown server response');
-          console.error('Server returned error:', errMsg);
-          msgEl.textContent = '❌ Submission failed: ' + errMsg;
-          msgEl.classList.add('error');
-        }
-      } catch (err) {
-        console.error('Network/fetch error:', err);
-        msgEl.textContent = '❌ Network error. Open DevTools Console for details.';
-        msgEl.classList.add('error');
-      }
-    });
-  })();
-</script>
-
 
 </body>
 </html>
