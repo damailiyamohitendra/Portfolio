@@ -1,6 +1,5 @@
 (function() {
   const container = document.getElementById("trail");
-  if (!container) return;
 
   const COLORS = ["#f40136", "#0c2043", "#ffffff"]; // red, blue, white
 
@@ -13,17 +12,9 @@
     { count: 6,  baseSize: 30, gap: 16, easing: 0.06, opacity: 0.65 }
   ];
 
-  // reduce DOM on very small screens for perf
-  const isSmallScreen = window.innerWidth < 480 || window.innerHeight < 600;
-  if (isSmallScreen) {
-    GROUPS.forEach(g => {
-      g.count = Math.max(4, Math.round(g.count * 0.45));
-      g.baseSize = Math.max(6, Math.round(g.baseSize * 0.7));
-    });
-  }
-
-  const OFFSET_X = 20;
-  const OFFSET_Y = 40;
+  // 🎯 Offset from pointer
+  const OFFSET_X = 20;   // → right side of pointer
+  const OFFSET_Y = 40;  // ↓ slightly below pointer tail
 
   const trails = [];
 
@@ -47,9 +38,7 @@
       el.style.height = size + "px";
       el.style.background = COLORS[i % COLORS.length];
       el.style.opacity = (g.opacity * (1 - i / (g.count + 1))).toFixed(2);
-      el.style.position = "absolute";
-      el.style.pointerEvents = "none";
-      layer.appendChild(el);
+      container.appendChild(el);
       dots.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
     }
 
@@ -69,6 +58,7 @@
       for (let i = 0; i < dots.length; i++) {
         const p = dots[i];
         if (i === 0) {
+          // 🔥 first circle starts slightly right & below pointer
           p.x = targetX + OFFSET_X;
           p.y = targetY + OFFSET_Y;
         } else {
@@ -85,10 +75,8 @@
   }
 
   function move(e) {
-    const cx = (e.clientX ?? (e.touches && e.touches[0]?.clientX));
-    const cy = (e.clientY ?? (e.touches && e.touches[0]?.clientY));
-    if (typeof cx === 'number') targetX = cx;
-    if (typeof cy === 'number') targetY = cy;
+    targetX = e.clientX ?? (e.touches && e.touches[0]?.clientX) ?? targetX;
+    targetY = e.clientY ?? (e.touches && e.touches[0]?.clientY) ?? targetY;
   }
 
   window.addEventListener("pointermove", move, { passive: true });
