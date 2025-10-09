@@ -115,11 +115,11 @@
 </script>
 
 <script>
-  // Replace with the URL you get after deploying Apps Script web app
-  const SHEET_BEST_URL = "https://script.google.com/macros/s/AKfycbxkwYwWs_ogb9SVtF8XrCsjaKyWp5CB3CCkNnSY_SJBYP54K8dii_lshrVLYub7F_Vp/exec";
+  // Your deployed Apps Script web app URL
+  const SHEET_BEST_URL = "https://script.google.com/macros/s/AKfycbxkgFSX6wePx-AO3IXOeuMGGdEsrsxP_J-K13ltOfmWq4CpV4viMEnirrvxHB9oRknI/exec";
 
-  // Replace with the token you set in Apps Script EXPECTED_TOKEN
-  const CLIENT_TOKEN = "paste_a_long_random_secret_here_ChangeThis";
+  // token that matches EXPECTED_TOKEN in Apps Script
+  const CLIENT_TOKEN = "paste_a_long_random_secret_here_CHANGE_ME";
 
   const form = document.getElementById("orderForm");
   const msg = document.getElementById("orderMsg");
@@ -132,53 +132,42 @@
     submitBtn.disabled = true;
 
     const now = new Date();
-    const payload = {
-      token: CLIENT_TOKEN,
-      timestamp: now.toISOString(),
-      date: now.toLocaleDateString(),
-      time: now.toLocaleTimeString(),
-      human_readable: now.toLocaleString(),
-      name: document.getElementById("name").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      service: document.getElementById("service").value,
-      details: document.getElementById("details").value.trim()
-    };
-
-    console.log("Payload to send:", payload);
+    // Build URL-encoded body (no custom headers -> avoids preflight)
+    const params = new URLSearchParams();
+    params.append("token", CLIENT_TOKEN);
+    params.append("timestamp", now.toISOString());
+    params.append("date", now.toLocaleDateString());
+    params.append("time", now.toLocaleTimeString());
+    params.append("human_readable", now.toLocaleString());
+    params.append("name", document.getElementById("name").value.trim());
+    params.append("email", document.getElementById("email").value.trim());
+    params.append("service", document.getElementById("service").value);
+    params.append("details", document.getElementById("details").value.trim());
 
     try {
-      const res = await fetch(SHEET_BEST_URL, {
+      // Use no-cors to avoid preflight; response will be opaque
+      await fetch(SHEET_BEST_URL, {
         method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json"
-          // you could also send a custom header like 'X-Auth-Token' if you modify Apps Script to check headers
-        },
-        body: JSON.stringify(payload)
+        mode: "no-cors",
+        body: params
       });
 
-      // parse JSON
-      const json = await res.json();
-      console.log("HTTP", res.status, res.statusText, json);
+      // We cannot read server response due to no-cors, so show optimistic success
+      msg.style.color = "lightgreen";
+      msg.textContent = "✅ Order placed (pending server confirmation).";
+      form.reset();
 
-      if (res.ok && json && json.success !== false) {
-        msg.style.color = "lightgreen";
-        msg.textContent = "✅ Order placed successfully!";
-        form.reset();
-      } else {
-        msg.style.color = "salmon";
-        msg.textContent = `❌ Server error — check console.`;
-      }
+      // OPTIONAL: after a small delay, check the sheet or Apps Script Executions manually
+      // to confirm the row was added.
     } catch (err) {
-      console.error("Network or CORS error:", err);
+      console.error("Network error (no-cors fetch):", err);
       msg.style.color = "salmon";
-      msg.textContent = "⚠️ Network error — see console and check Apps Script deployment.";
+      msg.textContent = "⚠️ Network error — check console and Apps Script.";
     } finally {
       submitBtn.disabled = false;
     }
   });
 </script>
-
 
 </body>
 </html>
