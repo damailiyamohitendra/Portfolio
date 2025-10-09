@@ -115,8 +115,11 @@
 </script>
 
 <script>
-  // Replace this URL with your actual sheet.best POST endpoint
-  const SHEET_BEST_URL = "https://sheet.best/api/sheets/your-sheet-id-here";
+  // Replace with the URL you get after deploying Apps Script web app
+  const SHEET_BEST_URL = "https://script.google.com/macros/s/AKfycbzYXnogiXgyqWjx-vziUciXZVqV9eBIvzIOUlvWcpWHiToCfwzV54TjILUoT6b7_aa8/exec";
+
+  // Replace with the token you set in Apps Script EXPECTED_TOKEN
+  const CLIENT_TOKEN = "paste_a_long_random_secret_here_ChangeThis";
 
   const form = document.getElementById("orderForm");
   const msg = document.getElementById("orderMsg");
@@ -130,6 +133,7 @@
 
     const now = new Date();
     const payload = {
+      token: CLIENT_TOKEN,
       timestamp: now.toISOString(),
       date: now.toLocaleDateString(),
       time: now.toLocaleTimeString(),
@@ -146,33 +150,35 @@
       const res = await fetch(SHEET_BEST_URL, {
         method: "POST",
         mode: "cors",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+          // you could also send a custom header like 'X-Auth-Token' if you modify Apps Script to check headers
+        },
         body: JSON.stringify(payload)
       });
 
-      const text = await res.text();
-      let parsed;
-      try { parsed = text ? JSON.parse(text) : null; } catch (err) { parsed = text; }
+      // parse JSON
+      const json = await res.json();
+      console.log("HTTP", res.status, res.statusText, json);
 
-      console.log("HTTP", res.status, res.statusText, parsed);
-
-      if (res.ok) {
+      if (res.ok && json && json.success !== false) {
         msg.style.color = "lightgreen";
         msg.textContent = "✅ Order placed successfully!";
         form.reset();
       } else {
         msg.style.color = "salmon";
-        msg.textContent = `❌ Server error — check console. (${res.status})`;
+        msg.textContent = `❌ Server error — check console.`;
       }
     } catch (err) {
       console.error("Network or CORS error:", err);
       msg.style.color = "salmon";
-      msg.textContent = "⚠️ Network error — check console and Sheet.best URL.";
+      msg.textContent = "⚠️ Network error — see console and check Apps Script deployment.";
     } finally {
       submitBtn.disabled = false;
     }
   });
 </script>
+
 
 </body>
 </html>
